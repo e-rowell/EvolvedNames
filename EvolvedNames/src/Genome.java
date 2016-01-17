@@ -56,6 +56,11 @@ public class Genome {
 				myGene.setCharAt(i, theOther.myGene.charAt(i));
 			} 
 		}
+		
+	}
+	public void testMethod() {
+		//some more
+		//some data
 	}
 
 	// returns the finess of the Genome
