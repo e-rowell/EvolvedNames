@@ -12,11 +12,6 @@ public class Genome {
 	public Genome(double theMutationRate) {
 		this.myMutationRate = theMutationRate;
 		this.myGene = new StringBuilder(alpha[0]);
-		
-		for(int i = 0; i < 10; i++) {
-			System.out.println(randIndex(alpha.length));
-		}
-		
 	}
 
 	// copy constructor
