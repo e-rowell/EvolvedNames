@@ -1,7 +1,4 @@
 import java.util.Random;
-
-import javax.xml.bind.annotation.W3CDomHandler;
-
 public class Genome {
 	private static Random RANDOM = new Random();
 	double myMutationRate;
@@ -51,7 +48,11 @@ public class Genome {
 	// this function will update the current Genome by crossing it over with
 	// other
 	public void crossover(Genome other) {
-		int 
+	
+	}
+	public void testMethod() {
+		//some more
+		//some data
 	}
 
 	// returns the finess of the Genome
