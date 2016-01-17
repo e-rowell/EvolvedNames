@@ -60,15 +60,10 @@ public class Genome {
 	}
 	public void testMethod() {
 		//some more
-		//some data
-	}
-	public void testMethod() {
-		//some more
-		//some data
-		
+		//some data	
 	}
 	
-	// returns the finess of the Genome
+	// returns the fitness of the Genome
 	public Integer fitness() {
 		return null;
 	}
