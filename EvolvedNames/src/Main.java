@@ -6,10 +6,8 @@ public class Main {
 		// until the target string is part of the pop
 		//target string has fitness zero so loop should repeat
 		//until the most fit genome has fitness zero.
-		
-		
-		
-		
+		Genome newGene = new Genome(.05);
+		newGene.toString();
 		
 	}
 	
