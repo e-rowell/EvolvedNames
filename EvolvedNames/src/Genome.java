@@ -1,7 +1,5 @@
 import java.util.Random;
 
-import javax.xml.bind.annotation.W3CDomHandler;
-
 public class Genome {
 	private static Random RANDOM = new Random();
 	double myMutationRate;
@@ -14,6 +12,11 @@ public class Genome {
 	public Genome(double theMutationRate) {
 		this.myMutationRate = theMutationRate;
 		this.myGene = new StringBuilder(alpha[0]);
+		
+		for(int i = 0; i < 10; i++) {
+			System.out.println(randIndex(alpha.length));
+		}
+		
 	}
 
 	// copy constructor
@@ -22,27 +25,27 @@ public class Genome {
 		this.myMutationRate = theGene.myMutationRate;
 	}
 
-	// the function mutates the string in this Genonme
+	// the function mutates the string in this Genome
 	public void mutate() {
 
 		if (randChance() == true) {
-			int theIndex = randIndex(myGene.length());
+			int theIndex = randIndex(myGene.length() + 1); 
 			if (theIndex == myGene.length()) {
-				myGene.append(alpha[randIndex(alpha.length - 1)]);
+				myGene.append(alpha[randIndex(alpha.length)]);
 			} else {
-				myGene.insert(theIndex, alpha[randIndex(alpha.length - 1)]);
+				myGene.insert(theIndex, alpha[randIndex(alpha.length)]);
 			}
 		}
 
 		if (randChance() == true) {
 			if (myGene.length() > 2) {
-				myGene.deleteCharAt(randIndex(myGene.length() - 1));
+				myGene.deleteCharAt(randIndex(myGene.length()));
 			}
 		}
 
 		for (int i = 0; i < myGene.length() - 1; i++) {
 			if (randChance() == true) {
-				myGene.setCharAt(i, alpha[randIndex(alpha.length - 1)]);
+				myGene.setCharAt(i, alpha[randIndex(alpha.length)]);
 			}
 		}
 
@@ -50,8 +53,14 @@ public class Genome {
 
 	// this function will update the current Genome by crossing it over with
 	// other
-	public void crossover(Genome other) {
-		int 
+	public void crossover(Genome theOther) {
+		int smallestGeneLen = Math.min(myGene.length(), theOther.myGene.length());
+		
+		for (int i = 0; i < smallestGeneLen; i++) {
+			if(RANDOM.nextInt(2) == 1) {
+				myGene.setCharAt(i, theOther.myGene.charAt(i));
+			} 
+		}
 	}
 
 	// returns the finess of the Genome
