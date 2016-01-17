@@ -62,7 +62,12 @@ public class Genome {
 		//some more
 		//some data
 	}
-
+	public void testMethod() {
+		//some more
+		//some data
+		
+	}
+	
 	// returns the finess of the Genome
 	public Integer fitness() {
 		return null;
