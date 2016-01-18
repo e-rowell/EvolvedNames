@@ -1,11 +1,5 @@
 import java.util.Random;
-//make some other sweet awesome changes
-<<<<<<< Upstream, based on origin/master
-//some changes
-//some extra sweet awesome changes
-=======
-//make some other sweet awesome changes
->>>>>>> 65fc9fa made sweet awesome changes dude
+//class genome
 public class Genome {
 	public static Random RANDOM = new Random();
 	public double myMutationRate;
