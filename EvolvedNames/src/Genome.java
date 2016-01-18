@@ -58,11 +58,6 @@ public class Genome {
 		}
 		
 	}
-	public void testMethod() {
-		//some more
-		//some data	
-	}
-	
 	// returns the fitness of the Genome
 	public Integer fitness() {
 		return null;
