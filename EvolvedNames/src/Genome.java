@@ -1,17 +1,18 @@
 import java.util.Random;
-
+//class genome
 public class Genome {
-	private static Random RANDOM = new Random();
-	double myMutationRate;
-	StringBuilder myGene;
-	int fitnessLvl;
-	char[] alpha = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+	public static Random RANDOM = new Random();
+	public double myMutationRate;
+	public StringBuilder myGene;
+	public int fitnessLvl;
+	public char[] alpha = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
 			'U', 'V', 'W', 'X', 'Y', 'Z', '_', '-', '\'' };
 
 	// constructor
 	public Genome(double theMutationRate) {
 		this.myMutationRate = theMutationRate;
-		this.myGene = new StringBuilder(alpha[0]);
+		this.myGene = new StringBuilder();
+		myGene.append(alpha[0]);
 	}
 
 	// copy constructor
@@ -22,8 +23,7 @@ public class Genome {
 
 	// the function mutates the string in this Genome
 	public void mutate() {
-
-		if (randChance() == true) {
+		if (randChance()) {
 			int theIndex = randIndex(myGene.length() + 1); 
 			if (theIndex == myGene.length()) {
 				myGene.append(alpha[randIndex(alpha.length)]);
@@ -32,7 +32,7 @@ public class Genome {
 			}
 		}
 
-		if (randChance() == true) {
+		if (randChance()) {
 			if (myGene.length() > 2) {
 				myGene.deleteCharAt(randIndex(myGene.length()));
 			}
@@ -58,6 +58,7 @@ public class Genome {
 		}
 		
 	}
+	
 	// returns the fitness of the Genome
 	public Integer fitness() {
 		return null;
@@ -66,7 +67,7 @@ public class Genome {
 	private int randIndex(int theLength) {
 		return RANDOM.nextInt(theLength);
 	}
-
+	
 	private boolean randChance() {
 		boolean hitOrMiss;
 		Random random = new Random();
@@ -76,8 +77,11 @@ public class Genome {
 		} else {
 			hitOrMiss = false;
 		}
-		System.out.println(rand);
 		return hitOrMiss;
+	}
+	
+	public String toString() {
+		return myGene.toString();
 	}
 
 }
