@@ -1,5 +1,5 @@
 import java.util.Random;
-
+//some changes
 public class Genome {
 	public static Random RANDOM = new Random();
 	public double myMutationRate;
