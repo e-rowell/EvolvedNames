@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class Population {
-	public static final String TARGET = "CHRISTOPHER_PAUL_MARRIOT";
+	public static final String TARGET = "ET";
 	public Genome myMostFit;
 	public Integer myGeneration;
 	List<Genome> myPopulation; 
@@ -38,24 +38,34 @@ public class Population {
 	 * 
 	 */
 	public void day() {
-		for (Genome genome : myPopulation) {
-			genome.fitness();
-		}
-		
+		replaceLeastFit();
 		sortGenomes(myPopulation);
-		// mergeSort(myPopulation, 0, myPopulation.size() - 1);
-
-		if (!myPopulation.get(0).equals(myMostFit)) {
-			myMostFit = myPopulation.get(0);
-			System.out.println("Current most fit: " + myMostFit.toString());
-		}
+		updateMostFit();
 		
+		myGeneration++;
+	}
+	
+	private void replaceLeastFit() {
 		// spawns genomes to replace the least fit half
 		for (int i = myPopulation.size() / 2; i < myPopulation.size(); i++) {
 			myPopulation.set(i, spawnGenome());
 		}
+	}
+	
+	private Genome spawnGenome() {
+		Genome clone;
 		
-		myGeneration++;
+		if (Genome.RANDOM.nextBoolean()) {
+			clone = new Genome(myPopulation.get(randomBreed()));
+			clone.mutate();
+			clone.fitnessLvl = clone.fitness();
+		} else {
+			clone = new Genome(myPopulation.get(randomBreed()));
+			clone.crossover(myPopulation.get(randomBreed()));
+			clone.mutate();
+			clone.fitnessLvl = clone.fitness();
+		}
+		return clone;
 	}
 	
 	private void sortGenomes(List<Genome> list) {
@@ -79,29 +89,16 @@ public class Population {
 		myPopulation.set(theLargeIndex, tempGenome);
 	}
 	
-	/*private List<Genome> mergeSort(List<Genome> list, int left, int right) {
-		int middle = list.size() / 2;
-		if (middle == 1) return list;
-		mergeSort(list.subList(middle, list.size()), left, middle);
-		mergeSort(list.subList(middle, list.size()), middle, right);
-		sortGenomes(list);
-		return list;
-	}*/
-	
-	private Genome spawnGenome() {
-		Genome clone;
-		
-		if (Genome.RANDOM.nextBoolean()) {
-			clone = new Genome(myPopulation.get(randomBreed()));
-			clone.mutate();
-		} else {
-			clone = new Genome(myPopulation.get(randomBreed()));
-			clone.crossover(myPopulation.get(randomBreed()));
-			clone.mutate();
+	private void updateMostFit() {
+		if (!myPopulation.get(0).equals(myMostFit)) {
+			myMostFit = myPopulation.get(0);
+			System.out.println("Current most fit: " + myMostFit.toString());
 		}
-		return clone;
 	}
 	
+	
+	
+	// Selects from the most fit half
 	private int randomBreed() {
 		return Genome.RANDOM.nextInt((myPopulation.size() / 2));
 	}
@@ -134,7 +131,7 @@ public class Population {
 			counter++;
 			
 			genomeNumber = String.format("| %3d ", counter);
-			theGenome = String.format("| %-42s ", genome.toString());
+			theGenome = String.format("| %-42s ", genome.myGene.toString());
 			fitnessLevel = String.format("| %7d ", genome.fitness());
 			generation = String.format("| %10d |\n", myGeneration);
 			

@@ -5,7 +5,8 @@ import java.util.Random;
  * @author nicholas hays and ethan rowell
  */
 public class Genome {
-	public static final char[] ALPHA = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+	public static final char[] ALPHA = { 'A', 'B', 'C', 'D', 'E', 'F',
+			'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
 			'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_', '-', '\'' };
 	public static final Random RANDOM = new Random();
 	public double myMutationRate;
@@ -17,6 +18,7 @@ public class Genome {
 		myMutationRate = theMutationRate;
 		myGene = new StringBuilder();
 		myGene.append(ALPHA[0]);
+		fitnessLvl = fitness();
 	}
 
 	// copy constructor
@@ -24,6 +26,7 @@ public class Genome {
 		myGene = new StringBuilder();
 		myGene.append(theGene.myGene.toString());
 		myMutationRate = theGene.myMutationRate;
+		fitnessLvl = theGene.fitnessLvl;
 	}
 
 	// the function mutates the string in this Genome
@@ -39,15 +42,13 @@ public class Genome {
 		}
 
 		if (mutationChance()) {
-			if (myGene.length() >= 2) {
+			if (myGene.length() >= 2) 
 				myGene.deleteCharAt(randIndex(myGene.length()));
-			}
 		}
 
 		for (int i = 0; i < myGene.length(); i++) {
-			if (mutationChance()) {
+			if (mutationChance()) 
 				myGene.setCharAt(i, ALPHA[randIndex(ALPHA.length)]);
-			}
 		}
 	}
 
@@ -60,11 +61,10 @@ public class Genome {
 		myGene.setLength(0);
 		
 		for (int i = 0; i < smallestGeneLen; i++) {
-			if (RANDOM.nextBoolean()) {
+			if (RANDOM.nextBoolean()) 
 				myGene.append(theOther.myGene.charAt(i));
-			} else {
+			 else 
 				myGene.append(tempGene.charAt(i));
-			}
 		}
 	}
 
@@ -83,7 +83,7 @@ public class Genome {
 				f++;
 			}
 		}
-		return fitnessLvl = f;
+		return f;
 	}
 
 	private int randIndex(int theLength) {
@@ -92,11 +92,10 @@ public class Genome {
 
 	private boolean mutationChance() {
 		int rand = RANDOM.nextInt(100);
-		if (rand <= myMutationRate * 100) {
+		if (rand <= myMutationRate * 100) 
 			return true;
-		} else {
+		else 
 			return false;
-		}
 	}
 
 	public String toString() {
