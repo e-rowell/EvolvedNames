@@ -1,23 +1,25 @@
+/*
+ * Assignment 2 - Evolution
+ * 
+ * Nicholas Hays and Ethan Rowell
+ */
+
+
 import java.util.List;
 import java.util.ArrayList;
 
 /**
  * 
- * 
- * @author Ethan Rowell
- *
+ * Population of genomes.
+ * @author Nicholas Hays and Ethan Rowell
  */
 public class Population {
-	public static final String TARGET = "ET";
+	public static String TARGET = "CHRISTOPHER_PAUL_MARRIOT";
 	public Genome myMostFit;
 	public Integer myGeneration;
 	List<Genome> myPopulation; 
 	
-	/**
-	 * 
-	 * @param theNumGenomes
-	 * @param theMutationRate
-	 */
+	
 	public Population(Integer theNumGenomes, Double theMutationRate) {
 		myGeneration = 0;
 		myPopulation = new ArrayList<>();
@@ -25,70 +27,124 @@ public class Population {
 		populateGenomes(theNumGenomes, theMutationRate);
 	}
 	
-	/**
-	 * 
-	 */
+	// populates the genomes
 	private void populateGenomes(Integer theNumGenomes, Double theMutationRate) {
 		for(int i = 0; i < theNumGenomes; i++) {
 			myPopulation.add(new Genome(theMutationRate));
 		}
+		myMostFit = myPopulation.get(0);
 	}
 	
-	/**
-	 * 
-	 */
+	// one breeding cycle
 	public void day() {
-		replaceLeastFit();
-		sortGenomes(myPopulation);
+		deleteLeastFit();
+		spawnGenomes();
+		sortGenomes();
 		updateMostFit();
 		
 		myGeneration++;
 	}
 	
-	private void replaceLeastFit() {
-		// spawns genomes to replace the least fit half
-		for (int i = myPopulation.size() / 2; i < myPopulation.size(); i++) {
-			myPopulation.set(i, spawnGenome());
+	// deletes the least fit half
+	public void deleteLeastFit() {
+		int midIndex = (int) Math.ceil(myPopulation.size() / 2);
+		while (myPopulation.size() != midIndex) {
+			myPopulation.remove(myPopulation.size() - 1);
 		}
 	}
 	
-	private Genome spawnGenome() {
-		Genome clone;
+	// spawns genomes to replenish the population
+	void spawnGenomes() {
 		
-		if (Genome.RANDOM.nextBoolean()) {
-			clone = new Genome(myPopulation.get(randomBreed()));
-			clone.mutate();
-			clone.fitnessLvl = clone.fitness();
-		} else {
-			clone = new Genome(myPopulation.get(randomBreed()));
-			clone.crossover(myPopulation.get(randomBreed()));
-			clone.mutate();
-			clone.fitnessLvl = clone.fitness();
+		int currentSize = myPopulation.size();
+		for (int i = 0; i < currentSize; i++) {
+			Genome clone;
+			
+			if (Genome.RANDOM.nextBoolean()) {
+				clone = new Genome(myPopulation.get(randomBreed()));
+				clone.mutate();
+				clone.fitnessLvl = clone.fitness();
+			} else {
+				clone = new Genome(myPopulation.get(randomBreed()));
+				clone.crossover(myPopulation.get(randomBreed()));
+				clone.mutate();
+				clone.fitnessLvl = clone.fitness();
+			}
+			myPopulation.add(clone);
 		}
-		return clone;
 	}
 	
-	private void sortGenomes(List<Genome> list) {
-		boolean swapped = true;
-		int j = 0;
-		while (swapped) {
-			swapped = false;
+	// sorts the genomes using either bubble sort or merge sort,
+	// depending on the size
+	public void sortGenomes() {
+		int geneLen = Population.TARGET.length();
+		List<Genome> sorted = myPopulation;
+		if (myMostFit.myGene.length() < 10) {
+			bubbleSort(myPopulation);
+		} else {
+			sorted = divide(myPopulation);
+			myPopulation = sorted;
+		}
+	}
+	
+	// divides the list for merge sort
+	private List<Genome> divide(List<Genome> lst) {
+		if (lst.size() < 25)
+			return lst;
+		int middleIndex = lst.size() / 10;
+		List<Genome> subLeft = lst.subList(0, middleIndex);
+		List<Genome> subRight = lst.subList(middleIndex, lst.size());
+		divide(subLeft);
+		divide(subRight);
+		merge(lst, subLeft, subRight);
+		return lst;
+	}
+
+	// merges two lists into one after bubble sorting
+	private List<Genome> merge(List<Genome> lst, List<Genome> subLeft, List<Genome> subRight) {
+
+		bubbleSort(subLeft);
+		bubbleSort(subRight);
+		int ln = subLeft.size();
+		int rn = subRight.size();
+		int i = 0, j = 0, k = 0;
+		while (i < ln && j < rn) {
+			if (subLeft.get(i).fitnessLvl < subRight.get(j).fitnessLvl) {
+				lst.set(k, subLeft.get(i));
+				i++;
+			} else {
+				lst.set(k, subRight.get(j));
+				j++;
+			}
+			k++;
+		}
+		while (i < ln) {
+			lst.set(k, subLeft.get(i));
+			i++;
+			k++;
+		}
+		while (j < rn) {
+			lst.set(k, subRight.get(j));
 			j++;
-			for (int i = 0; i < list.size() - j; i++) {
-				if (list.get(i).fitnessLvl > list.get(i + 1).fitnessLvl) {
-					swapGenomes(i, i + 1);
-					swapped = true;
-				}
+			k++;
+		}
+		return lst;
+	}
+	
+	// bubble sort
+	private void bubbleSort(List<Genome> lst) {
+		for (int i = 1; i < lst.size(); i++) {
+			int j = i;
+			while (j > 0 && lst.get(j).fitnessLvl < lst.get(j - 1).fitnessLvl) {
+				Genome temp = lst.get(j - 1);
+				lst.set(j - 1, lst.get(j));
+				lst.set(j, temp);
+				j--;
 			}
 		}
 	}
 	
-	private void swapGenomes(Integer theSmallIndex, Integer theLargeIndex) {
-		Genome tempGenome = myPopulation.get(theSmallIndex);
-		myPopulation.set(theSmallIndex, myPopulation.get(theLargeIndex));
-		myPopulation.set(theLargeIndex, tempGenome);
-	}
-	
+	// updates the most fit of the population
 	private void updateMostFit() {
 		if (!myPopulation.get(0).equals(myMostFit)) {
 			myMostFit = myPopulation.get(0);
@@ -96,12 +152,11 @@ public class Population {
 		}
 	}
 	
-	
-	
 	// Selects from the most fit half
 	private int randomBreed() {
 		return Genome.RANDOM.nextInt((myPopulation.size() / 2));
 	}
+	
 	
 	public String toString() {
 		StringBuilder sBuilder = new StringBuilder();

@@ -1,8 +1,16 @@
+/*
+ * Assignment 2 - Evolution
+ * 
+ * Nicholas Hays and Ethan Rowell
+ */
+
+
 import java.util.Random;
 
 /**
+ * 
  * Defines a genome object.
- * @author nicholas hays and ethan rowell
+ * @author Nicholas Hays and Ethan Rowell
  */
 public class Genome {
 	public static final char[] ALPHA = { 'A', 'B', 'C', 'D', 'E', 'F',
@@ -86,10 +94,12 @@ public class Genome {
 		return f;
 	}
 
+	// random retrieves an index between 0 and length
 	private int randIndex(int theLength) {
 		return RANDOM.nextInt(theLength);
 	}
 
+	// random chance for mutation
 	private boolean mutationChance() {
 		int rand = RANDOM.nextInt(100);
 		if (rand <= myMutationRate * 100) 
