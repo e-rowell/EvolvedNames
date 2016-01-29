@@ -19,7 +19,6 @@ public class Population {
 	public Integer myGeneration;
 	List<Genome> myPopulation; 
 	
-	
 	public Population(Integer theNumGenomes, Double theMutationRate) {
 		myGeneration = 0;
 		myPopulation = new ArrayList<>();
@@ -55,11 +54,9 @@ public class Population {
 	
 	// spawns genomes to replenish the population
 	void spawnGenomes() {
-		
 		int currentSize = myPopulation.size();
 		for (int i = 0; i < currentSize; i++) {
 			Genome clone;
-			
 			if (Genome.RANDOM.nextBoolean()) {
 				clone = new Genome(myPopulation.get(randomBreed()));
 				clone.mutate();
@@ -82,27 +79,26 @@ public class Population {
 		if (myMostFit.myGene.length() < 10) {
 			bubbleSort(myPopulation);
 		} else {
-			sorted = divide(myPopulation);
+			sorted = mergeSort(myPopulation);
 			myPopulation = sorted;
 		}
 	}
 	
 	// divides the list for merge sort
-	private List<Genome> divide(List<Genome> lst) {
+	private List<Genome> mergeSort(List<Genome> lst) {
 		if (lst.size() < 25)
 			return lst;
 		int middleIndex = lst.size() / 10;
 		List<Genome> subLeft = lst.subList(0, middleIndex);
 		List<Genome> subRight = lst.subList(middleIndex, lst.size());
-		divide(subLeft);
-		divide(subRight);
+		mergeSort(subLeft);
+		mergeSort(subRight);
 		merge(lst, subLeft, subRight);
 		return lst;
 	}
 
 	// merges two lists into one after bubble sorting
 	private List<Genome> merge(List<Genome> lst, List<Genome> subLeft, List<Genome> subRight) {
-
 		bubbleSort(subLeft);
 		bubbleSort(subRight);
 		int ln = subLeft.size();
@@ -159,6 +155,9 @@ public class Population {
 	
 	
 	public String toString() {
+		// find length of mostFit
+		// population size
+		
 		StringBuilder sBuilder = new StringBuilder();
 		for(int i = 0; i <= 74; i++) {
 			if (i == 0 || i == 6 || i == 51 || i == 61 || i == 74) 

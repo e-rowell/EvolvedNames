@@ -39,7 +39,6 @@ public class Genome {
 
 	// the function mutates the string in this Genome
 	public void mutate() {
-		
 		if (mutationChance()) {
 			int theIndex = randIndex(myGene.length() + 1);
 			if (theIndex == myGene.length()) {
@@ -48,12 +47,10 @@ public class Genome {
 				myGene.insert(theIndex, ALPHA[randIndex(ALPHA.length)]);
 			}
 		}
-
 		if (mutationChance()) {
 			if (myGene.length() >= 2) 
 				myGene.deleteCharAt(randIndex(myGene.length()));
 		}
-
 		for (int i = 0; i < myGene.length(); i++) {
 			if (mutationChance()) 
 				myGene.setCharAt(i, ALPHA[randIndex(ALPHA.length)]);
@@ -63,7 +60,6 @@ public class Genome {
 	// this function will update the current Genome by crossing it over with
 	// other
 	public void crossover(Genome theOther) {
-	
 		int smallestGeneLen = Math.min(myGene.length(), theOther.myGene.length());
 		String tempGene = myGene.toString();
 		myGene.setLength(0);

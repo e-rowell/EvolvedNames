@@ -15,15 +15,14 @@ public class Main {
 	static Population population;
 	
 	public static void main(String[] args) {
-		// evolution();
+		evolution();
 		
-		testPopulation();
+		// testPopulation();
 		// testGenome();
 	}
 	
 	private static void evolution() {
-		
-		population = new Population(100, 0.05);
+		population = new Population(1000, 0.5);
 		double startTime = System.currentTimeMillis();
 		
 		while(population.myMostFit.fitness() > 0) {
@@ -84,7 +83,6 @@ public class Main {
 	}
 	
 	private static void testPopLarge() {
-		
 		// we don't mess around.
 		population = new Population(10000, 0.05);
 		double startTime = System.currentTimeMillis();
@@ -104,7 +102,6 @@ public class Main {
 	}
 	
 	private static void testPopMethods() {
-		
 		population = new Population(10, 0.5);
 		
 		
@@ -127,7 +124,6 @@ public class Main {
 	}
 	
 	private static void displayPopulation() {
-		
 		Population.TARGET = "OK";
 		
 		population = new Population(100, 0.25);
