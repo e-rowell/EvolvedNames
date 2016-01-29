@@ -28,6 +28,7 @@ public class Genome {
 
 	// the function mutates the string in this Genome
 	public void mutate() {
+		
 		if (mutationChance()) {
 			int theIndex = randIndex(myGene.length() + 1);
 			if (theIndex == myGene.length()) {
@@ -48,19 +49,12 @@ public class Genome {
 				myGene.setCharAt(i, ALPHA[randIndex(ALPHA.length)]);
 			}
 		}
-		// fitness();
 	}
 
 	// this function will update the current Genome by crossing it over with
 	// other
 	public void crossover(Genome theOther) {
-		/*int smallestGeneLen = Math.min(myGene.length(), theOther.myGene.length());
-		for (int i = 0; i < smallestGeneLen; i++) {
-			if (RANDOM.nextBoolean()) {
-				myGene.setCharAt(i, theOther.myGene.charAt(i));
-			}
-		}*/
-		
+	
 		int smallestGeneLen = Math.min(myGene.length(), theOther.myGene.length());
 		String tempGene = myGene.toString();
 		myGene.setLength(0);
@@ -90,7 +84,6 @@ public class Genome {
 			}
 		}
 		return fitnessLvl = f;
-		// return f;
 	}
 
 	private int randIndex(int theLength) {
@@ -107,6 +100,6 @@ public class Genome {
 	}
 
 	public String toString() {
-		return myGene.toString();
+		return "( \"" + myGene.toString() + "\", " + fitnessLvl + ")";
 	}
 }

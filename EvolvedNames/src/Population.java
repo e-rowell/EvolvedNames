@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class Population {
-	public static final String TARGET = "ETHAN_ANDERSON_ROWELL";
+	public static final String TARGET = "CHRISTOPHER_PAUL_MARRIOT";
 	public Genome myMostFit;
 	public Integer myGeneration;
 	List<Genome> myPopulation; 
@@ -44,7 +44,6 @@ public class Population {
 		
 		sortGenomes(myPopulation);
 		// mergeSort(myPopulation, 0, myPopulation.size() - 1);
-		System.out.println(toString());
 
 		if (!myPopulation.get(0).equals(myMostFit)) {
 			myMostFit = myPopulation.get(0);
@@ -80,14 +79,14 @@ public class Population {
 		myPopulation.set(theLargeIndex, tempGenome);
 	}
 	
-	private List<Genome> mergeSort(List<Genome> list, int left, int right) {
+	/*private List<Genome> mergeSort(List<Genome> list, int left, int right) {
 		int middle = list.size() / 2;
 		if (middle == 1) return list;
 		mergeSort(list.subList(middle, list.size()), left, middle);
 		mergeSort(list.subList(middle, list.size()), middle, right);
 		sortGenomes(list);
 		return list;
-	}
+	}*/
 	
 	private Genome spawnGenome() {
 		Genome clone;

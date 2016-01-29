@@ -11,7 +11,7 @@ public class Main {
 			population.day();
 		}
 		
-		System.out.println("The most fit: " + population.myMostFit.toString());
+		System.out.println(String.format("The most fit: %s in %d generations.", population.myMostFit.toString(), population.myGeneration));
 		
 		double endTime = System.currentTimeMillis();
 		double totalTime = (endTime - startTime) / 1000;
