@@ -37,9 +37,6 @@ public class Main {
 		System.out.println("Total time: " + totalTime);
 	}
 	
-	
-	
-	
 	private static void testGenome() {
 		Population.TARGET = "TESTING_GENOMES";
 		

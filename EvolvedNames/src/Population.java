@@ -22,7 +22,6 @@ public class Population {
 	public Population(Integer theNumGenomes, Double theMutationRate) {
 		myGeneration = 0;
 		myPopulation = new ArrayList<>();
-		
 		populateGenomes(theNumGenomes, theMutationRate);
 	}
 	
@@ -74,15 +73,14 @@ public class Population {
 	// sorts the genomes using either bubble sort or merge sort,
 	// depending on the size
 	public void sortGenomes() {
-		int geneLen = Population.TARGET.length();
 		mergeSort(myPopulation);
 	}
 	
 	// divides the list for merge sort
 	private void mergeSort(List<Genome> lst) {
-		if (lst.size() < 25)
+		if (lst.size() < 2)
 			return;
-		int middleIndex = lst.size() / 10;
+		int middleIndex = lst.size() / 2;
 		List<Genome> subLeft = lst.subList(0, middleIndex);
 		List<Genome> subRight = lst.subList(middleIndex, lst.size());
 		mergeSort(subLeft);
