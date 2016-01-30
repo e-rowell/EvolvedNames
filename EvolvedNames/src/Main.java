@@ -22,7 +22,7 @@ public class Main {
 	}
 	
 	private static void evolution() {
-		population = new Population(100, 0.05);
+		population = new Population(100000, 0.05);
 		double startTime = System.currentTimeMillis();
 		
 		while(population.myMostFit.fitness() > 0) {
