@@ -75,26 +75,19 @@ public class Population {
 	// depending on the size
 	public void sortGenomes() {
 		int geneLen = Population.TARGET.length();
-		List<Genome> sorted = myPopulation;
-		if (myMostFit.myGene.length() < 10) {
-			bubbleSort(myPopulation);
-		} else {
-			sorted = mergeSort(myPopulation);
-			myPopulation = sorted;
-		}
+		mergeSort(myPopulation);
 	}
 	
 	// divides the list for merge sort
-	private List<Genome> mergeSort(List<Genome> lst) {
+	private void mergeSort(List<Genome> lst) {
 		if (lst.size() < 25)
-			return lst;
+			return;
 		int middleIndex = lst.size() / 10;
 		List<Genome> subLeft = lst.subList(0, middleIndex);
 		List<Genome> subRight = lst.subList(middleIndex, lst.size());
 		mergeSort(subLeft);
 		mergeSort(subRight);
 		merge(lst, subLeft, subRight);
-		return lst;
 	}
 
 	// merges two lists into one after bubble sorting
